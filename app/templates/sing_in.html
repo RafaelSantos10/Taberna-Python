@@ -1,0 +1,31 @@
+{% extends 'login.html' %}
+
+{% block sing_in %}
+<h1 class="h3 mb-3 fw-normal">Crie sua Conta</h1>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <label for="inputAddress" class="form-label">Nome</label>
+    {{form.name(class="form-control", id="inputname")}}
+
+  </div>
+  <div class="col-md-6">
+    <label for="inputAddress2" class="form-label">Nome de Usuário</label>
+    {{form.user_name(class="form-control", id="inputusername")}}
+  </div>
+  <div class="col-12">
+    <label for="inputEmail4" class="form-label">Email</label>
+    {{form.email(class="form-control", placeholder="name@example.com",
+    id="inputEmail4")}}
+  </div>
+  <div class="col-12">
+    <label for="inputPassword4" class="form-label">Senha</label>
+    {{form.password(class="form-control", placeholder="Password",
+    id="inputPassword4")}}
+
+
+  </div>
+
+</div>
+<button class="btn w-100 py-2" type="submit">Cadastrar-se</button>
+{% endblock %}

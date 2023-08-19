@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% block title %}{{ super() }} - Home{% endblock %}
+{% block home %}
+
+<body>
+    <header>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand"> <img width="100" src="../static/img/logo.png" alt=""></a>
+
+                <div>
+                    {% if current_user.is_authenticated %}
+                    <button type="button" class="btn nav-bnt btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        Postar
+                    </button>
+                    <a class="btn nav-bnt btn-outline-primary" href="{{url_for('logout')}}">Sair</a>
+                    {% else %}
+                    <a class="btn nav-bnt btn-outline-primary" href="{{url_for('login')}}">Entrar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+
+                    <form action="/post" method="POST">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Nova Publicação</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            {{new_post.csrf_token}}
+
+                            <div class="mb-3">
+                                <label for="title_for_post" class="form-label">Assunto</label>
+                                {{new_post.title(class="form-control", placeholder="Titulo da publicação",
+                                id="title_for_post")}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">O que está pensando?</label>
+                                {{new_post.content(class="form-control", rows="3",
+                                id="exampleFormControlTextarea1")}}
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button submit" class="btn btn-primary">Publicar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </header>
+
+    {% block edit_post %}
+    <main>
+
+        {% for post in posts %}
+
+
+        <div class="card mb-3 mt-5">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text text-break">{{post.content}}</p>
+
+            </div>
+            <div class="footer">
+                <p class="card-text text-lowercase"><small class="text-body-secondary">@{{post.author_post}}</small></p>
+                {% if current_user.is_authenticated %}
+                {% if current_user.is_authenticated and post.user_id == user %}
+
+                <div class="btn-group options  btn-group-sm" role="group" aria-label="Basic outlined example">
+                    <button type="button" class="btn btn-outline-success">
+                        <a href="{{ url_for('update', post_id=post.id) }}" method="post">Editar</a></button>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger"> <a
+                            href="{{ url_for('delete', id=post.id) }}">Deletar</a></button>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+
+
+        {% endfor %}
+
+    </main>
+    {% endblock %}
+</body>
+
+<script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+{% endblock %}
