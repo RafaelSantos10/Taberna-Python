@@ -45,14 +45,14 @@ pip install -r requirements.txt
 
 ### 4. Configurar a Variável de Ambiente SECRET_KEY
 
-Configure a variável de ambiente `SECRET_KEY` com uma senha forte e aleatória. Isso é importante para a segurança da sua aplicação. No ambiente virtual ativado, execute o seguinte comando:
+Configure a variável de ambiente `SECRET_KEY` com uma senha forte e aleatória. Isso é importante para a segurança da sua aplicação. Na raiz do projeto crie o arquivo `.env`:
 
 ```bash
-# No Windows (CMD)
-set SECRET_KEY=sua_senha_secreta_aqui
+# No Windows
+ SECRET_KEY=sua_senha_secreta_aqui
 
 # No macOS e Linux
-export SECRET_KEY=sua_senha_secreta_aqui
+ SECRET_KEY=sua_senha_secreta_aqui
 ```
 
 ### 5. Iniciar o Servidor
